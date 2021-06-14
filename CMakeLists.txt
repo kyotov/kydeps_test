@@ -10,15 +10,11 @@ include(gflags)
 include(glog)
 include(llvm)
 
-#    add_compile_options(-EHsc)
 string(REGEX REPLACE "[\\\\|/]" "[\\\\/]" HEADERS "${CMAKE_BINARY_DIR}/../.*")
-message(${HEADERS})
-
 set(CMAKE_CXX_CLANG_TIDY
         "${CLANG_TIDY}"
         "--header-filter=${HEADERS}"
         "--export-fixes=${CMAKE_BINARY_DIR}/clang-tidy.fixes")
-
 
 add_executable(kydeps_test
         main.cpp
