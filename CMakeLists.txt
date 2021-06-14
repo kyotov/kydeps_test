@@ -4,10 +4,25 @@ project(kydeps_test)
 
 set(CMAKE_CXX_STANDARD 20)
 
-include(kydeps/kydeps.cmake)
-kydeps(google/log google/flags)
+include(kydeps/install/KyDeps.cmake)
 
-add_executable(kydeps_test main.cpp)
+include(gflags)
+include(glog)
+include(llvm)
+
+#    add_compile_options(-EHsc)
+string(REGEX REPLACE "[\\\\|/]" "[\\\\/]" HEADERS "${CMAKE_BINARY_DIR}/../.*")
+message(${HEADERS})
+
+set(CMAKE_CXX_CLANG_TIDY
+        "${CLANG_TIDY}"
+        "--header-filter=${HEADERS}"
+        "--export-fixes=${CMAKE_BINARY_DIR}/clang-tidy.fixes")
+
+
+add_executable(kydeps_test
+        main.cpp
+        Foo.cpp)
 target_link_libraries(kydeps_test
         gflags
         glog::glog)

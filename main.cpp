@@ -1,6 +1,9 @@
 #include <glog/logging.h>
 
+#include "Foo.h"
+
 int main() {
-    LOG(INFO) << "Hello, World!" << std::endl;
-    return 0;
+  Foo foo = Foo();
+  LOG(INFO) << "Hello, World!" << std::endl;
+  return 0;
 }
